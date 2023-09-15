@@ -1,0 +1,7 @@
+.redirectInfo {
+  cursor: pointer;
+}
+
+.redirectInfo:hover {
+  color: rebeccapurple;
+}

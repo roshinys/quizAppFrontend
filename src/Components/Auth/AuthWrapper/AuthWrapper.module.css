@@ -1,0 +1,14 @@
+.authWrapper {
+  height: max-content;
+  padding: 20px;
+  margin-top: 10vh;
+  box-shadow: 0 0 5px 2px wheat;
+  width: 400px;
+  border-radius: 20px;
+}
+
+@media (max-width: 768px) {
+  .authWrapper {
+    width: max-content;
+  }
+}
