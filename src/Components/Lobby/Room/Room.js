@@ -4,6 +4,7 @@ import { createRoom, fetchRooms } from "../../../store/room/room-action";
 import RoomList from "./RoomList";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import styles from "./Room.module.css";
 
 function generateRandomName(length) {
   const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
@@ -32,7 +33,7 @@ function Room() {
   };
 
   return (
-    <div>
+    <div className={styles.roomList}>
       <RoomList
         label="Available Rooms"
         roomList={availableRooms}

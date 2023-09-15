@@ -1,0 +1,4 @@
+.roomList {
+  display: flex;
+  flex-direction: column;
+}

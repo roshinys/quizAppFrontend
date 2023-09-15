@@ -31,7 +31,15 @@ function SingleRoom({ name, _id, users, status }) {
   };
 
   return (
-    <div>
+    <div
+      style={{
+        margin: "5px",
+        padding: "5px",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
       <DemoPaper onClick={handleClick}>{name}</DemoPaper>
     </div>
   );

@@ -1,0 +1,11 @@
+.stack {
+  display: flex !important;
+  flex-direction: column !important;
+  margin: 20px;
+}
+
+.label {
+  border-bottom: 1px solid rebeccapurple;
+  padding-bottom: 10px;
+  text-align: center;
+}
