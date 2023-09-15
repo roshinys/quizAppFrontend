@@ -4,6 +4,7 @@ import { styled } from "@mui/material/styles";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { addUsertoRoom } from "../../../store/room/room-action";
+import { alertActions } from "../../../store/alert/alert-slice";
 
 const DemoPaper = styled(Paper)(({ theme }) => ({
   width: 100,
@@ -19,12 +20,19 @@ const DemoPaper = styled(Paper)(({ theme }) => ({
 }));
 
 function SingleRoom({ name, _id, users, status }) {
+  const { joinedRoom } = useSelector((state) => state.room);
   const token = useSelector((state) => state.auth.token);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleClick = () => {
     if (!status) {
-      dispatch(addUsertoRoom(token, _id, navigate));
+      if (joinedRoom.length === 0) {
+        dispatch(addUsertoRoom(token, _id, navigate));
+      } else {
+        dispatch(
+          alertActions.setAlert({ content: "Already in a room cant join" })
+        );
+      }
     } else {
       navigate(`/quiz/${_id}`);
     }

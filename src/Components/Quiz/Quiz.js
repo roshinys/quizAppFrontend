@@ -18,28 +18,34 @@ const quizReducer = (state, action) => {
       return { ...state, index: action.payload };
     case "setQuestion":
       return { ...state, question: action.payload };
+    case "setSelectedAnswer":
+      console.log(action.payload);
+      return { ...state, selectedAnswer: action.payload };
     default:
       return state;
   }
 };
 
+const initialState = {
+  status: "waiting",
+  points: 0,
+  answered: false,
+  index: 0,
+  question: null,
+  selectedAnswer: "",
+};
+
 function Quiz() {
-  const initialState = {
-    status: "waiting",
-    points: 0,
-    answered: false,
-    index: 0,
-    question: null,
-  };
   const [quiz, dispatch] = useReducer(quizReducer, initialState);
   const { token, userDetails } = useSelector((state) => state.auth);
   const { roomId } = useParams();
   const navigate = useNavigate();
   useEffect(() => {
     socket.on("connect", () => {
+      console.log(socket.id);
       socket.emit("room", roomId, token);
     });
-    return async () => {
+    return () => {
       socket.off("connect");
     };
   }, [roomId, token, quiz.status]);
@@ -71,6 +77,9 @@ function Quiz() {
     dispatch({ type: "setAnswered", payload: false });
     if (quiz.index + 1 < 5) {
       setTimeout(() => {
+        if (quiz.question.answer === quiz.selectedAnswer) {
+          dispatch({ type: "setPoints", payload: quiz.points + 10 });
+        }
         dispatch({ type: "setIndex", payload: quiz.index + 1 });
       }, 10000);
     } else {

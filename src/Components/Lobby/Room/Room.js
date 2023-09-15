@@ -40,7 +40,7 @@ function Room() {
         status={false}
       />
       <RoomList label="Joined Rooms" roomList={joinedRoom} status={true} />
-      {availableRooms.length === 0 && (
+      {availableRooms.length === 0 && joinedRoom.length === 0 && (
         <Button variant="contained" onClick={createRoomHandler}>
           Create Room
         </Button>
