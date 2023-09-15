@@ -77,7 +77,12 @@ function Quiz() {
     dispatch({ type: "setAnswered", payload: false });
     if (quiz.index + 1 < 5) {
       setTimeout(() => {
-        if (quiz.question.answer === quiz.selectedAnswer) {
+        if (
+          quiz &&
+          quiz.question &&
+          quiz.question.answer &&
+          quiz.question.answer === quiz.selectedAnswer
+        ) {
           dispatch({ type: "setPoints", payload: quiz.points + 10 });
         }
         dispatch({ type: "setIndex", payload: quiz.index + 1 });

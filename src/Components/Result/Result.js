@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { getGameResult } from "../../api/api";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styles from "./Result.module.css";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -10,8 +10,10 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import { Button } from "@mui/material";
 
 function Result() {
+  const navigate = useNavigate();
   const { gameId } = useParams();
   const [score, setScore] = useState(null);
   const token = useSelector((state) => state.auth.token);
@@ -63,6 +65,16 @@ function Result() {
           </Table>
         </TableContainer>
       )}
+      <Button
+        onClick={() => {
+          navigate("/lobby");
+        }}
+        style={{
+          marginTop: "10px",
+        }}
+      >
+        Back to lobby
+      </Button>
     </div>
   );
 }

@@ -44,7 +44,8 @@ export const addUsertoRoom = (token, roomId, navigate) => {
       if (!data.success) {
         throw new Error(data?.message);
       }
-      navigate(`/quiz/${roomId}`);
+      // navigate(`/quiz/${roomId}`);
+      window.location.href = `/quiz/${roomId}`;
     } catch (err) {
       dispatch(
         alertActions.setAlert({
@@ -72,7 +73,8 @@ export const createRoom = (token, name, navigate) => {
       }
       const room = data.room;
       dispatch(roomActions.setJoinedRoom({ joinedRoom: [room] }));
-      navigate(`/quiz/${room._id}`);
+      // navigate(`/quiz/${room._id}`);
+      window.location.href = `/quiz/${room._id}`;
     } catch (err) {
       dispatch(
         alertActions.setAlert({

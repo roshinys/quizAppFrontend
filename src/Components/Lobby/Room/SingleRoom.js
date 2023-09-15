@@ -2,9 +2,9 @@ import React from "react";
 import Paper from "@mui/material/Paper";
 import { styled } from "@mui/material/styles";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { addUsertoRoom } from "../../../store/room/room-action";
 import { alertActions } from "../../../store/alert/alert-slice";
+import { useNavigate } from "react-router-dom";
 
 const DemoPaper = styled(Paper)(({ theme }) => ({
   width: 100,
@@ -20,9 +20,9 @@ const DemoPaper = styled(Paper)(({ theme }) => ({
 }));
 
 function SingleRoom({ name, _id, users, status }) {
+  const navigate = useNavigate();
   const { joinedRoom } = useSelector((state) => state.room);
   const token = useSelector((state) => state.auth.token);
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleClick = () => {
     if (!status) {
@@ -34,7 +34,7 @@ function SingleRoom({ name, _id, users, status }) {
         );
       }
     } else {
-      navigate(`/quiz/${_id}`);
+      window.location.href = `/quiz/${_id}`;
     }
   };
 
