@@ -4,6 +4,7 @@ import socket from "../../socket/socket";
 import { useSelector } from "react-redux";
 import Question from "./Question";
 import { addToGameResult } from "../../api/api";
+import styles from "./Quiz.module.css";
 
 const quizReducer = (state, action) => {
   switch (action.type) {
@@ -71,7 +72,7 @@ function Quiz() {
     if (quiz.index + 1 < 5) {
       setTimeout(() => {
         dispatch({ type: "setIndex", payload: quiz.index + 1 });
-      }, 3000);
+      }, 10000);
     } else {
       dispatch({ type: "setQuestion", payload: null });
       dispatch({ type: "setStatus", payload: "completed" });
@@ -80,10 +81,9 @@ function Quiz() {
   });
 
   return (
-    <div>
-      Quiz Status - {quiz.status}
+    <div className={styles.quiz}>
+      <h3>Quiz Status - {quiz.status}</h3>
       {quiz.question !== null && <Question quiz={quiz} dispatch={dispatch} />}
-      <span>{quiz.points}</span>
     </div>
   );
 }

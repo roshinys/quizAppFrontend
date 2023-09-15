@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import styles from "./Question.module.css";
+import { Button } from "@mui/material";
 
 function Question({ dispatch, quiz }) {
   const [selectedAnswer, setSelectedAnswer] = useState("");
@@ -14,7 +16,7 @@ function Question({ dispatch, quiz }) {
   };
 
   return (
-    <div>
+    <div className={styles.question}>
       <h2>{quiz.question.text}</h2>
       <form onSubmit={handleSubmit}>
         {quiz.question.options.map((option, index) => (
@@ -30,7 +32,11 @@ function Question({ dispatch, quiz }) {
             <label htmlFor={`option-${index}`}>{option}</label>
           </div>
         ))}
-        {!quiz.answered && <button type="submit">Submit</button>}
+        {!quiz.answered && (
+          <Button variant="contained" type="submit">
+            Submit
+          </Button>
+        )}
       </form>
     </div>
   );

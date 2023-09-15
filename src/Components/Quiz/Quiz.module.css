@@ -1,0 +1,14 @@
+.quiz {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+}
+
+.quiz h3 {
+  font-size: 20px;
+  border-bottom: 1px solid rebeccapurple;
+  padding-bottom: 20px;
+  text-align: center;
+}
