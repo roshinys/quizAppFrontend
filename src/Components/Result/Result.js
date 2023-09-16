@@ -18,6 +18,12 @@ function Result() {
   const [score, setScore] = useState(null);
   const token = useSelector((state) => state.auth.token);
   useEffect(() => {
+    // const intervalId = setInterval(async () => {
+    //   const newScore = await getGameResult(gameId, token);
+    //   if (newScore) {
+    //     setScore(newScore);
+    //   }
+    // }, 1000);
     async function gameResponse() {
       const newScore = await getGameResult(gameId, token);
       console.log(newScore);
@@ -26,6 +32,9 @@ function Result() {
       }
     }
     gameResponse();
+    // return () => {
+    //   clearInterval(intervalId);
+    // };
   }, [token, gameId]);
   return (
     <div className={styles.scoreBoard}>

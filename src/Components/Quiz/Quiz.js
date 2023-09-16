@@ -41,23 +41,16 @@ function Quiz() {
   const { roomId } = useParams();
   const navigate = useNavigate();
   useEffect(() => {
-    socket.on("connect", () => {
-      console.log(socket.id);
-      socket.emit("room", roomId, token);
-    });
-    return () => {
-      socket.off("connect");
-    };
+    // socket.on("connect", () => {
+    socket.emit("room", roomId, token);
+    // });
+    // return () => {
+    //   socket.off("connect");
+    // };
   }, [roomId, token, quiz.status]);
 
   useEffect(() => {
-    // if (quiz.status === "active") {
-    //   socket.emit("generateQuestion", roomId, quiz.index);
-    // }
     if (quiz.status === "completed") {
-      console.log("quix");
-      console.log(quiz.points);
-      console.log("whats happening here?");
       async function addResult() {
         const result = { roomId, userId: userDetails._id, score: quiz.points };
         await addToGameResult(result, token, navigate);
@@ -73,10 +66,7 @@ function Quiz() {
 
   socket.on("newQuestion", async (question, index) => {
     dispatch({ type: "setQuestion", payload: question });
-    console.log(question, index);
-    // dispatch({ type: "setAnswered", payload: false });
     if (index + 1 < 5) {
-      // setTimeout(() => {
       if (
         quiz &&
         quiz.question &&
@@ -85,13 +75,10 @@ function Quiz() {
       ) {
         dispatch({ type: "setPoints", payload: quiz.points + 10 });
       }
-      // dispatch({ type: "setIndex", payload: quiz.index + 1 });
-      // }, 10);
     } else {
       dispatch({ type: "setQuestion", payload: null });
       dispatch({ type: "setStatus", payload: "completed" });
       socket.emit("completed", roomId, userDetails._id, quiz.points);
-      console.log("retry count");
     }
   });
 

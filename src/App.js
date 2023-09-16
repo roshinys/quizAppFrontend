@@ -9,6 +9,8 @@ import AlertNotification from "./Components/UI/AlertNotification/AlertNotificati
 import Lobby from "./Components/Lobby/Lobby";
 import Quiz from "./Components/Quiz/Quiz";
 import Result from "./Components/Result/Result";
+import { useEffect } from "react";
+import socket from "./socket/socket";
 
 const router = createBrowserRouter([
   {
@@ -46,6 +48,14 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
+  useEffect(() => {
+    socket.on("connect", () => {
+      console.log(socket.id);
+    });
+    return () => {
+      socket.off("connect");
+    };
+  }, []);
   return (
     <>
       <RouterProvider router={router} />

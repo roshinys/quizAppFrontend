@@ -1,21 +1,10 @@
 import React from "react";
 import styles from "./Question.module.css";
-// import { Button } from "@mui/material";
 
 function Question({ dispatch, quiz }) {
-  // const [selectedAnswer, setSelectedAnswer] = useState("");
   const handleOptionChange = (e) => {
     dispatch({ type: "setSelectedAnswer", payload: e.target.value });
   };
-
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   console.log(quiz.answered);
-  //   if (!quiz.answered && quiz.question.answer === quiz.selectedAnswer) {
-  //     dispatch({ type: "setPoints", payload: quiz.points + 10 });
-  //   }
-  //   dispatch({ type: "setAnswered", payload: true });
-  // };
 
   return (
     <div className={styles.question}>
@@ -34,11 +23,6 @@ function Question({ dispatch, quiz }) {
             <label htmlFor={`option-${index}`}>{option}</label>
           </div>
         ))}
-        {/* {!quiz.answered && (
-          <Button variant="contained" type="submit">
-            Submit
-          </Button>
-        )} */}
       </form>
     </div>
   );
