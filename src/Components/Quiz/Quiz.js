@@ -51,46 +51,47 @@ function Quiz() {
   }, [roomId, token, quiz.status]);
 
   useEffect(() => {
-    if (quiz.status === "active") {
-      socket.emit("generateQuestion", roomId, quiz.index);
-    }
+    // if (quiz.status === "active") {
+    //   socket.emit("generateQuestion", roomId, quiz.index);
+    // }
     if (quiz.status === "completed") {
-      const result = { roomId, userId: userDetails._id, score: quiz.points };
-      addToGameResult(result, token, navigate);
+      console.log("quix");
+      console.log(quiz.points);
+      console.log("whats happening here?");
+      async function addResult() {
+        const result = { roomId, userId: userDetails._id, score: quiz.points };
+        await addToGameResult(result, token, navigate);
+        dispatch({ type: "setStatus", payload: "Calculating Result" });
+      }
+      addResult();
     }
-  }, [
-    quiz.status,
-    roomId,
-    quiz.index,
-    token,
-    quiz.points,
-    navigate,
-    userDetails._id,
-  ]);
+  }, [quiz.status, roomId, token, quiz.points, navigate, userDetails._id]);
 
   socket.on("startGame", (data) => {
     dispatch({ type: "setStatus", payload: data.message });
   });
 
-  socket.on("newQuestion", async (question) => {
+  socket.on("newQuestion", async (question, index) => {
     dispatch({ type: "setQuestion", payload: question });
-    dispatch({ type: "setAnswered", payload: false });
-    if (quiz.index + 1 < 5) {
-      setTimeout(() => {
-        if (
-          quiz &&
-          quiz.question &&
-          quiz.question.answer &&
-          quiz.question.answer === quiz.selectedAnswer
-        ) {
-          dispatch({ type: "setPoints", payload: quiz.points + 10 });
-        }
-        dispatch({ type: "setIndex", payload: quiz.index + 1 });
-      }, 10000);
+    console.log(question, index);
+    // dispatch({ type: "setAnswered", payload: false });
+    if (index + 1 < 5) {
+      // setTimeout(() => {
+      if (
+        quiz &&
+        quiz.question &&
+        quiz.question.answer &&
+        quiz.question.answer === quiz.selectedAnswer
+      ) {
+        dispatch({ type: "setPoints", payload: quiz.points + 10 });
+      }
+      // dispatch({ type: "setIndex", payload: quiz.index + 1 });
+      // }, 10);
     } else {
       dispatch({ type: "setQuestion", payload: null });
       dispatch({ type: "setStatus", payload: "completed" });
       socket.emit("completed", roomId, userDetails._id, quiz.points);
+      console.log("retry count");
     }
   });
 
