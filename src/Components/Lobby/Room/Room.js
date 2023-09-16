@@ -5,6 +5,7 @@ import RoomList from "./RoomList";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import styles from "./Room.module.css";
+import socket from "../../../socket/socket";
 
 function generateRandomName(length) {
   const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
@@ -30,7 +31,12 @@ function Room() {
   const createRoomHandler = () => {
     const name = generateRandomName(6);
     dispatch(createRoom(token, name, navigate));
+    socket.emit("createRoom");
   };
+
+  socket.on("fetchRoom", () => {
+    dispatch(fetchRooms(token));
+  });
 
   return (
     <div className={styles.roomList}>

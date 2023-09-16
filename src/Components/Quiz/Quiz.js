@@ -41,12 +41,7 @@ function Quiz() {
   const { roomId } = useParams();
   const navigate = useNavigate();
   useEffect(() => {
-    // socket.on("connect", () => {
     socket.emit("room", roomId, token);
-    // });
-    // return () => {
-    //   socket.off("connect");
-    // };
   }, [roomId, token, quiz.status]);
 
   useEffect(() => {
@@ -66,15 +61,16 @@ function Quiz() {
 
   socket.on("newQuestion", async (question, index) => {
     dispatch({ type: "setQuestion", payload: question });
+    dispatch({ type: "setAnswered", payload: false });
     if (index + 1 < 5) {
-      if (
-        quiz &&
-        quiz.question &&
-        quiz.question.answer &&
-        quiz.question.answer === quiz.selectedAnswer
-      ) {
-        dispatch({ type: "setPoints", payload: quiz.points + 10 });
-      }
+      // if (
+      //   quiz &&
+      //   quiz.question &&
+      //   quiz.question.answer &&
+      //   quiz.question.answer === quiz.selectedAnswer
+      // ) {
+      //   dispatch({ type: "setPoints", payload: quiz.points + 10 });
+      // }
     } else {
       dispatch({ type: "setQuestion", payload: null });
       dispatch({ type: "setStatus", payload: "completed" });
@@ -86,6 +82,9 @@ function Quiz() {
     <div className={styles.quiz}>
       <h3>Quiz Status - {quiz.status}</h3>
       {quiz.question !== null && <Question quiz={quiz} dispatch={dispatch} />}
+      {quiz.status === "completed" && (
+        <p>Calculating The Results... Wait for few seconds</p>
+      )}
     </div>
   );
 }
