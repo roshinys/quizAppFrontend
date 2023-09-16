@@ -34,7 +34,6 @@ function SingleRoom({ name, _id, users, status }) {
         );
       }
     } else {
-      // window.location.href = `/quiz/${_id}`;
       navigate(`/quiz/${_id}`);
     }
   };

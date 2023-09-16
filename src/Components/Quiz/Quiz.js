@@ -62,16 +62,7 @@ function Quiz() {
   socket.on("newQuestion", async (question, index) => {
     dispatch({ type: "setQuestion", payload: question });
     dispatch({ type: "setAnswered", payload: false });
-    if (index + 1 < 5) {
-      // if (
-      //   quiz &&
-      //   quiz.question &&
-      //   quiz.question.answer &&
-      //   quiz.question.answer === quiz.selectedAnswer
-      // ) {
-      //   dispatch({ type: "setPoints", payload: quiz.points + 10 });
-      // }
-    } else {
+    if (index + 1 >= 5) {
       dispatch({ type: "setQuestion", payload: null });
       dispatch({ type: "setStatus", payload: "completed" });
       socket.emit("completed", roomId, userDetails._id, quiz.points);

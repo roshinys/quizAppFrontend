@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./Question.module.css";
-import { Button } from "@mui/material";
+import { Button, FormHelperText } from "@mui/material";
 
 function Question({ dispatch, quiz }) {
   const handleOptionChange = (e) => {
@@ -18,6 +18,9 @@ function Question({ dispatch, quiz }) {
   return (
     <div className={styles.question}>
       <h2>{quiz.question.text}</h2>
+      <FormHelperText id="my-helper-text">
+        New Question Appears after every 10 seconds
+      </FormHelperText>
       <form onSubmit={handleSubmit}>
         {quiz.question.options.map((option, index) => (
           <div key={Math.random()}>
